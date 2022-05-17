@@ -28,7 +28,13 @@ function App() {
       });
 
       const newItem = await response.json();
-      setItems([...items, newItem]);
+
+      if (newItem.name === "") {
+        window.alert("There is no item to add");
+      } else {
+        setItems([...items, newItem]);
+        setForm({ name: "", location: "N/A" });
+      }
       return newItem;
     } catch (err) {
       console.error(err);
@@ -36,7 +42,6 @@ function App() {
   }
 
   //Editing the item
-
   const editpage = document.getElementById("editpage");
   const overlay = document.getElementById("overlay");
 
@@ -49,7 +54,7 @@ function App() {
   }
 
   async function closeEditPage(e) {
-    e.preventDefault();
+    // e.preventDefault();
 
     if (editpage === null) return;
     editpage.classList.remove("active");
@@ -66,10 +71,13 @@ function App() {
         body: JSON.stringify(form),
       });
 
-      const data = await response.json();
-      console.log({ data });
+      const editedItem = await response.json();
+      setForm({ name: "", location: "N/A" });
+      console.log("items", items);
 
+      console.log(editedItem);
       closeEditPage();
+      return editedItem;
     } catch (err) {
       console.error(err);
     }
@@ -80,6 +88,7 @@ function App() {
     async function getItems() {
       try {
         const response = await fetch("http://localhost:4000/items", {
+          method: "GET",
           headers: {
             "Content-Type": "application/json",
           },
@@ -95,8 +104,7 @@ function App() {
     getItems();
   }, []);
 
-  //Deleting item
-
+  //Deleting an item
   async function deleteItem(id) {
     let answer = false;
 
@@ -109,6 +117,7 @@ function App() {
         });
 
         const data = await response.json();
+        console.log("deleted:", data);
       } catch (err) {
         console.error(err);
       }
@@ -129,47 +138,50 @@ function App() {
         <button id="create" onClick={handleCreate}>
           Add new item
         </button>
-        <section>
-          <label>Items in inventory:</label>
-          {items &&
-            items.map((item) => {
-              const { name, location, id } = item;
-
-              return (
-                <ul key={id}>
-                  <li>Item: {name}</li>
-                  <li>Location: {location}</li>
-                  <button onClick={openEditPage}>Edit</button>
-                  <div className="editpage" id="editpage">
-                    <label>Name: </label>
-                    <input
-                      name="name"
-                      value={form.name}
-                      onChange={handleChange}
-                    ></input>
-                    <label>Location:</label>
-                    <input
-                      name="location"
-                      value={form.location}
-                      onChange={handleChange}
-                    ></input>
-                    <button
-                      onClick={() => completeEdit(id)}
-                      className="complete"
-                    >
-                      Complete
-                    </button>
-                    <button onClick={closeEditPage} className="cancel">
-                      Cancel
-                    </button>
-                  </div>
-                  <div id="overlay"></div>
-                  <button onClick={() => deleteItem(id)}>Delete</button>
-                </ul>
-              );
-            })}
-        </section>
       </form>
+      <section>
+        <label>Items in inventory:</label>
+        {items &&
+          items.map((item) => {
+            const { name, location, id } = item;
+
+            return (
+              <ul key={id}>
+                <li>Item: {name}</li>
+                <li>Location: {location}</li>
+                <button onClick={openEditPage}>Edit</button>
+                <div className="editpage" id="editpage">
+                  <h4>Changing item "{item.name}" into:</h4>
+                  <label>Name: </label>
+                  <input
+                    name="name"
+                    value={form.name}
+                    onChange={handleChange}
+                  ></input>
+                  <label>Location:</label>
+                  <input
+                    name="location"
+                    value={form.location}
+                    onChange={handleChange}
+                  ></input>
+
+                  <button
+                    onClick={() => completeEdit(item.id)}
+                    className="complete"
+                  >
+                    Complete
+                  </button>
+                  <button onClick={closeEditPage} className="cancel">
+                    Cancel
+                  </button>
+                </div>
+                <div id="overlay"></div>
+                <button onClick={() => deleteItem(id)}>Delete</button>
+              </ul>
+            );
+          })}
+      </section>
+
       {/* <div>Hello</div> */}
     </section>
   );

@@ -1,24 +1,29 @@
 {
   "items": [
     {
-      "name": "Apple",
+      "name": "Stamp",
+      "location": "GA",
+      "id": 6
+    },
+    {
+      "name": "Keyboard",
+      "location": "VA",
+      "id": 7
+    },
+    {
+      "name": "Bread",
       "location": "CA",
-      "id": 1
+      "id": 10
     },
     {
-      "name": "Record",
-      "location": "NY",
-      "id": 2
+      "name": "Laptop",
+      "location": "KY",
+      "id": 11
     },
     {
-      "name": "Toy",
-      "location": "WA",
-      "id": 3
-    },
-    {
-      "name": "Fruits",
-      "location": "CA",
-      "id": 4
+      "name": "Tea",
+      "location": "MA",
+      "id": 12
     }
   ]
 }
