@@ -1,0 +1,24 @@
+{
+  "items": [
+    {
+      "name": "Apple",
+      "location": "CA",
+      "id": 1
+    },
+    {
+      "name": "Record",
+      "location": "NY",
+      "id": 2
+    },
+    {
+      "name": "Toy",
+      "location": "WA",
+      "id": 3
+    },
+    {
+      "name": "Fruits",
+      "location": "CA",
+      "id": 4
+    }
+  ]
+}
