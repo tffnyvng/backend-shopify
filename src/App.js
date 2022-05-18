@@ -149,6 +149,7 @@ function App() {
               <ul key={id}>
                 <li>Item: {name}</li>
                 <li>Location: {location}</li>
+
                 <button onClick={openEditPage}>Edit</button>
                 <div className="editpage" id="editpage">
                   <h4>Changing item "{item.name}" into:</h4>
@@ -165,15 +166,8 @@ function App() {
                     onChange={handleChange}
                   ></input>
 
-                  <button
-                    onClick={() => completeEdit(item.id)}
-                    className="complete"
-                  >
-                    Complete
-                  </button>
-                  <button onClick={closeEditPage} className="cancel">
-                    Cancel
-                  </button>
+                  <button onClick={() => completeEdit(id)}>Complete</button>
+                  <button onClick={closeEditPage}>Cancel</button>
                 </div>
                 <div id="overlay"></div>
                 <button onClick={() => deleteItem(id)}>Delete</button>
